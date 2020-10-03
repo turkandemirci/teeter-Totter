@@ -1,3 +1,4 @@
+//keeps constans
 export const OBJECT_MIN_WEIGHT = 1;
 export const OBJECT_MAX_WEIGHT = 10;
 

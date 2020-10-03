@@ -1,4 +1,5 @@
 <template>
+  <!--circle,square and triangle-->
   <div class="c-game-object" :class="{ ['c-game-object--' + type]: type }">
     <div class="c-game-object__text">{{ weight }} kg</div>
   </div>
@@ -8,6 +9,7 @@
 export default {
   name: "game-object",
   components: {},
+  // game object gets two props type and weight
   props: ["type", "weight"],
   methods: {},
   computed: {},

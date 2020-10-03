@@ -1,4 +1,5 @@
 <template>
+  <!--this template includes upper buttons and teeter-totter-->
   <div class="c-game-content">
     right: {{ $store.getters.rightSideSum }} left:{{
       $store.getters.leftSideSum
@@ -29,17 +30,18 @@
 //let the game begins component
 import TeeterTotter from "./TeeterTotter.vue";
 import GameObject from "./GameObject.vue";
+// this one is for access state mutations
 import { mapMutations } from "vuex";
 export default {
   name: "game-content",
   components: {
     TeeterTotter,
-    GameObject
+    GameObject,
   },
   computed: {
     leftUpperObjects: function() {
       return this.$store.state.leftSideUpperObjects;
-    }
+    },
   },
   created() {
     this.$store.dispatch("startGame");
@@ -50,10 +52,11 @@ export default {
       "deleteFromUppersObjects",
       "createObjectsList",
       "clear",
-      "start"
+      "start",
     ]),
 
     triggerForAnimation() {
+      // animation
       if (this.$store.state.isClear && this.$store.state.isClear === "true") {
         this.start();
       }
@@ -75,8 +78,8 @@ export default {
           }
         }
       }, 10);
-    }
-  }
+    },
+  },
 };
 </script>
 
