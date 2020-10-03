@@ -1,7 +1,18 @@
 <template>
   <div class="c-game-content">
+    right: {{ $store.getters.rightSideSum }} left:{{
+      $store.getters.leftSideSum
+    }}
     <div class="c-game-content__upper">
-      <button @click="triggerForAnimation">Start Animate</button>
+      <button
+        class="c-game-content__upper-start-button"
+        @click="triggerForAnimation"
+      >
+        Start Animate
+      </button>
+      <button class="c-game-content__upper-stop-button" @click="this.clear()">
+        Stop Animate
+      </button>
       <game-object
         v-for="object in leftUpperObjects"
         :key="object.id"
@@ -23,12 +34,12 @@ export default {
   name: "game-content",
   components: {
     TeeterTotter,
-    GameObject,
+    GameObject
   },
   computed: {
-    leftUpperObjects: function () {
+    leftUpperObjects: function() {
       return this.$store.state.leftSideUpperObjects;
-    },
+    }
   },
   created() {
     this.$store.dispatch("startGame");
@@ -38,14 +49,19 @@ export default {
       "addleftSideObjects",
       "deleteFromUppersObjects",
       "createObjectsList",
+      "clear",
+      "start"
     ]),
 
     triggerForAnimation() {
+      if (this.$store.state.isClear && this.$store.state.isClear === "true") {
+        this.start();
+      }
       const object = this.leftUpperObjects[0];
       var elem = document.getElementById("animation-object");
       var pos = 0;
       var id = setInterval(() => {
-        if (pos == 490) {
+        if (pos == 390) {
           clearInterval(id);
           this.addleftSideObjects(object);
           this.deleteFromUppersObjects();
@@ -54,11 +70,13 @@ export default {
           this.triggerForAnimation();
         } else {
           pos++;
-          elem.style.top = pos + "px";
+          if (elem) {
+            elem.style.top = pos + "px";
+          }
         }
       }, 10);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -71,8 +89,20 @@ export default {
   &__upper {
     position: relative;
     flex: 1 1 50%;
-    margin-bottom: 500px;
+    margin-bottom: 420px;
     left: 30%;
+    &-start-button {
+      margin-left: 50px;
+      border: transparent;
+      height: 40px;
+      background-color: #33a7b6;
+    }
+    &-stop-button {
+      margin-left: 40px;
+      height: 40px;
+      border: transparent;
+      background-color: #0195d2;
+    }
   }
 }
 </style>

@@ -10,9 +10,25 @@ export const store = createStore({
     leftSideObjects: [],
     rightSideObjects: [],
     leftSideUpperObjects: [],
+    isClear: false,
   },
 
-  getters: {},
+  getters: {
+    leftSideSum(state) {
+      let total = 0;
+      state.leftSideObjects.forEach((item) => {
+        total += item.weight;
+      });
+      return total;
+    },
+    rightSideSum(state) {
+      let total = 0;
+      state.rightSideObjects.forEach((item) => {
+        total += item.weight;
+      });
+      return total;
+    },
+  },
   actions: {
     startGame({ commit }) {
       commit("createObjectsList", true);
@@ -40,6 +56,16 @@ export const store = createStore({
     },
     deleteFromUppersObjects(state) {
       state.leftSideUpperObjects.pop();
+    },
+    clear(state) {
+      state.isClear = true;
+      state.leftSideObjects = [];
+      state.rightSideObjects = [];
+      state.leftSideUpperObjects = [];
+    },
+    start(state) {
+      this.startGame();
+      state.isClear = false;
     },
   },
 });

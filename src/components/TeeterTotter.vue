@@ -32,31 +32,23 @@ const MAX_BENDING_PERCENTAGE = 30;
 export default {
   name: "teeter-totter",
   components: { GameObject },
-  methods: {
-    calculateListSum(list) {
-      let total = 0;
-      list.forEach((item) => {
-        total += item.weight;
-      });
-      return total;
-    },
-  },
+  methods: {},
   computed: {
-    leftObjects: function () {
+    leftObjects: function() {
       return this.$store.state.leftSideObjects;
     },
-    rightObjects: function () {
+    rightObjects: function() {
       return this.$store.state.rightSideObjects;
     },
     //found formula from net
-    lineBendingPercentage: function () {
+    lineBendingPercentage: function() {
       let percentage = 0;
 
       if (!this.leftObjects) {
         return MAX_BENDING_PERCENTAGE / 2;
       } else {
-        const left = this.calculateListSum(this.leftObjects);
-        const right = this.calculateListSum(this.rightObjects);
+        const left = this.$store.getters.leftSideSum;
+        const right = this.$store.getters.rightSideSum;
         const subtraction = Math.abs(right - left);
 
         percentage =
@@ -69,8 +61,8 @@ export default {
           return percentage / 2;
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
